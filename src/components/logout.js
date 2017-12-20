@@ -17,12 +17,10 @@ class Logout extends Component {
   }
 
   onSubmit = () => {
-    // console.log("yeah");
     axios.defaults.headers.common[
       "Authorization"
     ] = window.localStorage.getItem("token");
     axios.post("http://localhost:5000/api/v1/auth/logout").then(response => {
-      // console.log(this.state.token);
       window.localStorage.removeItem("token");
       window.localStorage.removeItem("name");
       this.setState({ logout: true });

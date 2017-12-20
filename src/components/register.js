@@ -31,14 +31,11 @@ class Register extends React.Component {
         password: this.state.password
       })
       .then(response => {
-        // console.log(`then${response}`);
         this.setState({ registered: true });
-        // console.log(this.state.registered);
         this.props.history.push("/");
         toast.success(response.data.message);
       })
       .catch(err => {
-        // console.log(`err:${err}`);
         toast.error(err.response.data.message);
       });
   };

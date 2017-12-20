@@ -3,7 +3,6 @@ import axios from "axios";
 
 import { Redirect, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.min.css";
 
 class Login extends React.Component {
   constructor(props) {
@@ -33,7 +32,6 @@ class Login extends React.Component {
         password: this.state.password
       })
       .then(response => {
-        // console.log(response);
         window.localStorage.setItem("token", response.data.access_token);
         this.setState({
           token: response.data.access_token,
@@ -42,11 +40,9 @@ class Login extends React.Component {
         });
         window.localStorage.setItem("authenticated", true);
         window.localStorage.setItem("name", response.data.welcome);
-        // console.log(response.data.access_token);
         toast.success(response.data.message);
       })
       .catch(err => {
-        // console.log(err);
         toast.error(err.response.data.message);
       });
   };
