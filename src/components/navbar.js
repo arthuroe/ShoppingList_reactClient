@@ -13,9 +13,9 @@ class Navbar extends Component {
       <div>
         <nav className="blue darken-3">
           <div className="nav-wrapper">
-            <a href="/shoppinglists" className="brand-logo center">
+            <Link to="/shoppinglists" className="brand-logo center">
               Shoppinglists
-            </a>
+            </Link>
             <a
               data-activates="main-menu"
               className="button-collapse show-on-large"
@@ -24,27 +24,27 @@ class Navbar extends Component {
             </a>
             <ul className="right hide-on-small-only">
               <li>
-                <a href="/">
+                <Link to="/">
                   <i className="fa fa-user fa-3" aria-hidden="true" />
                   {this.state.name}
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/logout">
+                <Link to="/logout">
                   <i className="fa fa-sign-out" aria-hidden="true" />Log Out
-                </a>
+                </Link>
               </li>
             </ul>
             <ul className="side-nav" id="main-menu">
               <li>
-                <a href="/">
+                <Link to="/">
                   <i className="fa fa-users" /> Shoppinglists
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/shoppinglist/add">
+                <Link to="/shoppinglist/add">
                   <i className="fa fa-plus" /> Add ShoppingList
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
