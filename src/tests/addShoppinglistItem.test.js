@@ -1,5 +1,5 @@
 import React from "react";
-import AddShoppingListItem from "../components/AddShoppingListItem";
+import AddShoppingListItem from "../components/addShoppinglistItem";
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
 

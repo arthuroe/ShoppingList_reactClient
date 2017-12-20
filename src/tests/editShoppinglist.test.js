@@ -1,5 +1,5 @@
 import React from "react";
-import EditShoppingList from "../components/editShoppingList";
+import EditShoppingList from "../components/editShoppinglist";
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
 
