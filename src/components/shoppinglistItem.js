@@ -28,7 +28,7 @@ class ShoppingListItem extends Component {
         toast.success(response.data.message);
       })
       .catch(err => {
-        toast.error(err.response.data.message);
+        // toast.error(err.response.data.message);
       });
   };
 
