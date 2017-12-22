@@ -10,7 +10,6 @@ class ShoppingLists extends Component {
     this.state = {
       shoppinglists: []
     };
-    this.searchHandler = this.searchHandler.bind(this);
   }
 
   componentWillMount() {
