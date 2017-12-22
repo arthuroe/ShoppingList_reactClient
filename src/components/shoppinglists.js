@@ -10,6 +10,7 @@ class ShoppingLists extends Component {
     this.state = {
       shoppinglists: []
     };
+    this.searchHandler = this.searchHandler.bind(this);
   }
 
   componentWillMount() {
@@ -54,6 +55,9 @@ class ShoppingLists extends Component {
           closeOnClick
           pauseOnHover
         />
+        <form>
+          <input id="search" type="text" placeholder="search" />
+        </form>
         <ul className="collection">{shoppinglists}</ul>
         <div className="fixed-action-btn">
           <Link to="/shoppinglist/add" className="btn-large btn-floating red">
