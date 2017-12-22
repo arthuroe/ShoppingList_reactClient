@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches 1`] = `
+<div>
+  <h1>
+    shoppinglists
+  </h1>
+  <ToastContainer
+    autoClose={5000}
+    bodyClassName=""
+    className={null}
+    closeButton={<DefaultCloseButton />}
+    closeOnClick={true}
+    hideProgressBar={false}
+    newestOnTop={false}
+    pauseOnHover={true}
+    position="top-right"
+    progressClassName=""
+    style={null}
+    toastClassName=""
+    transition={[Function]}
+  />
+  <form>
+    <input
+      id="search"
+      placeholder="search"
+      type="text"
+    />
+  </form>
+  <ul
+    className="collection"
+  />
+  <div
+    className="fixed-action-btn"
+  >
+    <Link
+      className="btn-large btn-floating red"
+      replace={false}
+      to="/shoppinglist/add"
+    >
+      <i
+        className="fa fa-plus"
+      />
+    </Link>
+  </div>
+</div>
+`;
