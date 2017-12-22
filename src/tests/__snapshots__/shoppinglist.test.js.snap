@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches 1`] = `
+<li
+  className="collection-item"
+>
+  <Link
+    replace={false}
+    to="/shoppinglists/1"
+  >
+    one
+  </Link>
+  <Link
+    className="btn right"
+    replace={false}
+    to="/shoppinglists/edit/1"
+  >
+    Edit
+  </Link>
+  <button
+    className="btn red right"
+    onClick={[Function]}
+  >
+    Delete
+  </button>
+</li>
+`;
