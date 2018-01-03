@@ -23,6 +23,7 @@ exports[`matches 1`] = `
   <form>
     <input
       id="search"
+      onChange={[Function]}
       placeholder="search"
       type="text"
     />
