@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import SearchBar from "./search.js";
 
 class Navbar extends Component {
   constructor() {
@@ -38,7 +37,6 @@ class Navbar extends Component {
             </ul>
 
             <ul className="side-nav" id="main-menu">
-              <li />
               <li>
                 <Link to="/">
                   <i className="fa fa-users" /> Shoppinglists

@@ -53,7 +53,7 @@ class EditShoppingList extends Component {
       .catch(err => {
         toast.error(err.response.data.message);
         if (
-          err.response.data.message ==
+          err.response.data.message ===
             "Invalid token. Please register or login" ||
           "Expired token. Please login to get a new token" ||
           "Token blacklisted. Please log in again." ||

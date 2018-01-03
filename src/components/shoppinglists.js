@@ -8,12 +8,23 @@ class ShoppingLists extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      shoppinglists: []
+      shoppinglists: [],
+      filtered: []
     };
+    this.filterList = this.filterList.bind(this);
   }
 
   componentWillMount() {
     this.getShoppinglists();
+  }
+
+  filterList(event) {
+    var updatedList = this.state.shoppinglists;
+    updatedList = updatedList.filter(function(item) {
+      return item.toLowerCase().search(event.target.value.toLowerCase()) !== -1;
+      // console.log(event.target.value.toLowerCase());
+    });
+    this.setState({ shoppinglists: updatedList });
   }
 
   getShoppinglists() {
@@ -28,7 +39,7 @@ class ShoppingLists extends Component {
       .catch(err => {
         toast.error(err.response.data.message);
         if (
-          err.response.data.message ==
+          err.response.data.message ===
             "Invalid token. Please register or login" ||
           "Expired token. Please login to get a new token" ||
           "Token blacklisted. Please log in again." ||
@@ -41,7 +52,13 @@ class ShoppingLists extends Component {
 
   render() {
     const shoppinglists = this.state.shoppinglists.map((shoppinglist, i) => {
-      return <ShoppingList key={shoppinglist.id} shoppinglist={shoppinglist} />;
+      return (
+        <ShoppingList
+          filter={this.filterList}
+          key={shoppinglist.id}
+          shoppinglist={shoppinglist}
+        />
+      );
     });
     return (
       <div>
@@ -55,7 +72,12 @@ class ShoppingLists extends Component {
           pauseOnHover
         />
         <form>
-          <input id="search" type="text" placeholder="search" />
+          <input
+            id="search"
+            type="text"
+            placeholder="search"
+            onChange={this.filterList}
+          />
         </form>
         <ul className="collection">{shoppinglists}</ul>
         <div className="fixed-action-btn">

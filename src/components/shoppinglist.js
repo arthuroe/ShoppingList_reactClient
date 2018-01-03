@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 class ShoppingList extends Component {
   constructor(props) {
     super(props);
+    let filter = this.props.filter;
     this.state = {
       item: props.shoppinglist,
       redirect: false
