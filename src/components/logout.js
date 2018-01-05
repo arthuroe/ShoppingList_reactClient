@@ -23,16 +23,18 @@ class Logout extends Component {
     axios.post("http://localhost:5000/api/v1/auth/logout").then(response => {
       window.localStorage.removeItem("token");
       window.localStorage.removeItem("name");
-      this.setState({ logout: true });
+      window.localStorage.setItem("authenticated", false);
+      this.setState({ logout: true, authenticated: false });
       toast.success(response.data.message);
     });
   };
 
   render() {
-    if (this.state.logout) {
+    const { logout } = this.state;
+    if (logout) {
       return <Redirect to="/" />;
     }
-    return <div>Processing...</div>;
+    return <Redirect to="/" />;
   }
 }
 
