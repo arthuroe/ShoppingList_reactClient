@@ -1,48 +1,44 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
+import instance from "../config";
 
 class ShoppingList extends Component {
   constructor(props) {
     super(props);
+    let { shoppinglist } = this.props;
     this.state = {
-      item: props.shoppinglist,
+      item: shoppinglist,
       redirect: false
     };
     this.onDelete = this.onDelete.bind(this);
   }
 
   onDelete() {
-    axios.defaults.headers.common[
-      "Authorization"
-    ] = window.localStorage.getItem("token");
-    axios
-      .delete(
-        `http://localhost:5000/api/v1/shoppinglists/${this.state.item.id}`
-      )
+    instance
+      .delete(`/shoppinglists/${this.state.item.id}`)
       .then(response => {
         this.setState({ redirect: true });
         toast.success(response.data.message);
       })
       .catch(err => {
-        toast.error(err.response.data.message);
+        toast.error(err);
       });
   }
 
   render() {
-    if (this.state.redirect) {
+    const { id, name } = this.state.item;
+    const { redirect, item } = this.state;
+    if (redirect) {
       return <Redirect push to={"/shoppinglists"} />;
+    }
+    if (!item) {
+      return <div>Loading...</div>;
     }
     return (
       <li className="collection-item">
-        <Link to={`/shoppinglists/${this.state.item.id}`}>
-          {this.state.item.name}
-        </Link>
-        <Link
-          className="btn right"
-          to={`/shoppinglists/edit/${this.state.item.id}`}
-        >
+        <Link to={`/shoppinglists/${id}`}>{name}</Link>
+        <Link className="btn right" to={`/shoppinglists/edit/${id}`}>
           Edit
         </Link>
         <button onClick={this.onDelete} className="btn red right">

@@ -1,7 +1,7 @@
 import React from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import instance from "../config";
 
 class Register extends React.Component {
   constructor(props) {
@@ -17,30 +17,37 @@ class Register extends React.Component {
   }
 
   onChange = e => {
+    //updates state with user input
     this.setState({
       [e.target.name]: e.target.value
     });
   };
 
   onSubmit = e => {
+    //Sends user input to the API
     e.preventDefault();
-    axios
-      .post("http://localhost:5000/api/v1/auth/register", {
+
+    instance
+      .post("/auth/register", {
         name: this.state.username,
         email: this.state.email,
         password: this.state.password
       })
       .then(response => {
         this.setState({ registered: true });
+        //Redirects to login page after successful registration
         this.props.history.push("/");
+        //Notifies user of successful registration
         toast.success(response.data.message);
       })
       .catch(err => {
+        //Notifies user incase of any issues arising from registration
         toast.error(err.response.data.message);
       });
   };
 
   render() {
+    const { username, email, password } = this.state;
     return (
       <div className="container">
         <main>
@@ -66,7 +73,7 @@ class Register extends React.Component {
                         name="username"
                         placeholder="Name"
                         onChange={e => this.onChange(e)}
-                        value={this.state.username}
+                        value={username}
                       />
                     </div>
                     <div className="input-field col s12">
@@ -77,7 +84,7 @@ class Register extends React.Component {
                         name="email"
                         placeholder="Enter email"
                         onChange={e => this.onChange(e)}
-                        value={this.state.email}
+                        value={email}
                       />
                     </div>
                     <div className="input-field col s12">
@@ -88,7 +95,7 @@ class Register extends React.Component {
                         name="password"
                         placeholder="Enter password"
                         onChange={e => this.onChange(e)}
-                        value={this.state.password}
+                        value={password}
                       />
                     </div>
                   </div>

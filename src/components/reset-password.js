@@ -1,7 +1,7 @@
 import React from "react";
-import axios from "axios";
 import { Redirect, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import instance from "../config";
 
 class ResetPassword extends React.Component {
   constructor(props) {
@@ -15,28 +15,35 @@ class ResetPassword extends React.Component {
   }
 
   onChange = e => {
+    //update state with user input
     this.setState({
       [e.target.name]: e.target.value
     });
   };
 
   onSubmit = e => {
+    //submit user input to the API
     e.preventDefault();
-    axios
-      .post("http://localhost:5000/api/v1/auth/reset-password", {
+
+    instance
+      .post("/auth/reset-password", {
         email: this.state.email
       })
       .then(response => {
         this.setState({ reset: true });
+        //Notifies user on success
         toast.success(response.data.message);
       })
       .catch(err => {
+        //Notifies user incase of an error
         toast.error(err.response.data.message);
       });
   };
 
   render() {
-    if (this.state.reset) {
+    const { reset, email } = this.state;
+    //Redirect user to login after Successfully reseting password
+    if (reset) {
       return <Redirect to="/" />;
     }
     return (
@@ -65,7 +72,7 @@ class ResetPassword extends React.Component {
                         name="email"
                         placeholder="Enter email"
                         onChange={e => this.onChange(e)}
-                        value={this.state.email}
+                        value={email}
                       />
                     </div>
                   </div>

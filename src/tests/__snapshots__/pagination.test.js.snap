@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches 1`] = `
+<div>
+  <ul
+    className="pagination"
+    id="pagination"
+  >
+    <li
+      className="waves-effect"
+    >
+      <a
+        onClick={[Function]}
+      >
+        <i
+          className="material-icons"
+        >
+          chevron_left
+        </i>
+      </a>
+    </li>
+    <li
+      className="waves-effect"
+    >
+      <a
+        className="page-link"
+      >
+        Page undefined of undefined
+      </a>
+    </li>
+    <li
+      className="waves-effect"
+    >
+      <a
+        onClick={[Function]}
+      >
+        <i
+          className="material-icons"
+        >
+          chevron_right
+        </i>
+      </a>
+    </li>
+  </ul>
+</div>
+`;
