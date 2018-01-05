@@ -1,42 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`matches 1`] = `
-<div>
-  <br />
-  <Link
-    className="btn grey"
-    replace={false}
-    to="/shoppinglists"
-  >
-    Back
-  </Link>
-  <h1 />
-  <ToastContainer
-    autoClose={5000}
-    bodyClassName=""
-    className={null}
-    closeButton={<DefaultCloseButton />}
-    closeOnClick={true}
-    hideProgressBar={false}
-    newestOnTop={false}
-    pauseOnHover={true}
-    position="top-right"
-    progressClassName=""
-    style={null}
-    toastClassName=""
-    transition={[Function]}
-  />
-  <ul
-    className="collection"
-  />
-  <Link
-    className="btn-large btn-floating red"
-    replace={false}
-    to="/shoppinglist/items/add/"
-  >
-    <i
-      className="fa fa-plus"
-    />
-  </Link>
-</div>
+<Redirect
+  push={false}
+  to="/"
+/>
 `;

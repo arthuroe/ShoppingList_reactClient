@@ -1,3 +1,7 @@
+h1 {
+  text-transform: capitalize;
+}
+
 .btn {
   margin-top: -7.5px;
   margin-left: 10px;
@@ -5,6 +9,7 @@
 
 .collection .collection-item {
   padding: 12px 20px;
+  text-transform: capitalize;
 }
 
 html,
@@ -22,13 +27,8 @@ body,
   margin-left: 0;
 }
 
-.search {
-  background: #fff;
-  float: right;
-  color: #000;
-  height: 48px !important;
-  margin-top: 8px;
-  margin-right: 20px;
+#search {
+  width: 300px;
 }
 
 .search:hover {
@@ -37,4 +37,8 @@ body,
 
 .use i {
   margin-right: 5px;
+}
+
+nav ul.right {
+  text-transform: capitalize;
 }

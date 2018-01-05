@@ -1,48 +1,48 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
+import instance from "../config";
 
 class ShoppingListItem extends Component {
   constructor(props) {
     super(props);
-    let listId = this.props.listid;
+    let { listid, shoppinglistItem } = this.props;
     this.state = {
-      item: props.shoppinglistItem,
-      listid: listId,
+      item: shoppinglistItem,
+      listid: listid,
       redirect: false
     };
   }
 
   onDelete = () => {
-    axios.defaults.headers.common[
-      "Authorization"
-    ] = window.localStorage.getItem("token");
-    axios
-      .delete(
-        `http://localhost:5000/api/v1/shoppinglists/${this.state
-          .listid}/items/${this.state.item.id}`
-      )
+    //Deletes item from shoppinglist
+    instance
+      .delete(`/shoppinglists/${this.state.listid}/items/${this.state.item.id}`)
       .then(response => {
         this.setState({ redirect: true });
+        //return a flash message
         toast.success(response.data.message);
       })
-      .catch(err => {
-        // toast.error(err.response.data.message);
-      });
+      .catch(err => {});
   };
 
   render() {
+    const { id, name } = this.state.item;
+    const { item, listid } = this.state;
+    //Reload  items page after delete
     if (this.state.redirect) {
-      return <Redirect push to={`/shoppinglists/${this.state.listid}`} />;
+      return <Redirect push to={`/shoppinglists/${listid}`} />;
+    }
+    //Notify user items are being loaded
+    if (!item) {
+      return <div>Loading...</div>;
     }
     return (
       <li className="collection-item">
-        {this.state.item.name}
+        {name}
         <Link
           className="btn right"
-          to={`/shoppinglists/${this.state.listid}/items/edit/${this.state.item
-            .id}`}
+          to={`/shoppinglists/${listid}/items/edit/${id}`}
         >
           Edit
         </Link>
