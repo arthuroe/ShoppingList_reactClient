@@ -3,47 +3,42 @@ import { Link, Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 import instance from "../config";
 
-class ShoppingListItem extends Component {
+class ShoppingList extends Component {
   constructor(props) {
     super(props);
-    let { listid, shoppinglistItem } = this.props;
+    let { shoppinglist } = this.props;
     this.state = {
-      item: shoppinglistItem,
-      listid: listid,
+      item: shoppinglist,
       redirect: false
     };
+    this.onDelete = this.onDelete.bind(this);
   }
 
-  onDelete = () => {
-    //Deletes item from shoppinglist
+  onDelete() {
     instance
-      .delete(`/shoppinglists/${this.state.listid}/items/${this.state.item.id}`)
+      .delete(`/shoppinglists/${this.state.item.id}`)
       .then(response => {
         this.setState({ redirect: true });
-        //return a flash message
         toast.success(response.data.message);
       })
-      .catch(err => {});
-  };
+      .catch(err => {
+        toast.error(err);
+      });
+  }
 
   render() {
     const { id, name } = this.state.item;
-    const { item, listid } = this.state;
-    //Reload  items page after delete
-    if (this.state.redirect) {
-      return <Redirect push to={`/shoppinglists/${listid}`} />;
+    const { redirect, item } = this.state;
+    if (redirect) {
+      return <Redirect push to={"/shoppinglists"} />;
     }
-    //Notify user items are being loaded
     if (!item) {
       return <div>Loading...</div>;
     }
     return (
       <li className="collection-item">
-        {name}
-        <Link
-          className="btn right"
-          to={`/shoppinglists/${listid}/items/edit/${id}`}
-        >
+        <Link to={`/shoppinglists/${id}`}>{name}</Link>
+        <Link className="btn right" to={`/shoppinglists/edit/${id}`}>
           Edit
         </Link>
         <button onClick={this.onDelete} className="btn red right">
@@ -54,4 +49,4 @@ class ShoppingListItem extends Component {
   }
 }
 
-export default ShoppingListItem;
+export default ShoppingList;

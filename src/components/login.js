@@ -1,8 +1,8 @@
 import React from "react";
-import axios from "axios";
 
 import { Redirect, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import instance from "../config";
 
 class Login extends React.Component {
   constructor(props) {
@@ -19,6 +19,7 @@ class Login extends React.Component {
   }
 
   onChange = e => {
+    //Updates state with user input
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -26,13 +27,16 @@ class Login extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    axios
-      .post("http://localhost:5000/api/v1/auth/login", {
+    //Sends user credentials to the API for verification
+    instance
+      .post("/auth/login", {
         email: this.state.email,
         password: this.state.password
       })
       .then(response => {
+        //stores user token in local storage
         window.localStorage.setItem("token", response.data.access_token);
+        //updates state with data from response
         this.setState({
           token: response.data.access_token,
           name: response.data.welcome,
@@ -40,15 +44,19 @@ class Login extends React.Component {
         });
         window.localStorage.setItem("authenticated", true);
         window.localStorage.setItem("name", response.data.welcome);
+        //notifies user on successful login
         toast.success(response.data.message);
       })
       .catch(err => {
+        //notifies user on issues with login
         toast.error(err.response.data.message);
       });
   };
 
   render() {
-    if (this.state.token) {
+    const { token, email, password } = this.state;
+    //Redirects user to page with his shoppinglists after successful login
+    if (token) {
       return <Redirect to="/shoppinglists" />;
     }
     return (
@@ -76,7 +84,7 @@ class Login extends React.Component {
                         name="email"
                         placeholder="Enter email"
                         onChange={e => this.onChange(e)}
-                        value={this.state.email}
+                        value={email}
                       />
                     </div>
                     <div className="input-field col s12">
@@ -87,7 +95,7 @@ class Login extends React.Component {
                         name="password"
                         placeholder="Enter password"
                         onChange={e => this.onChange(e)}
-                        value={this.state.password}
+                        value={password}
                       />
                     </div>
                   </div>

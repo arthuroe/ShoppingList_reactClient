@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
+import Navbar from "./navbar";
+import instance from "../config";
 
 class EditShoppingList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      authenticated: window.localStorage.getItem("token"),
       name: ""
     };
   }
@@ -23,11 +25,8 @@ class EditShoppingList extends Component {
 
   getShoppinglistName() {
     let listId = this.props.match.params.id;
-    axios.defaults.headers.common[
-      "Authorization"
-    ] = window.localStorage.getItem("token");
-    axios
-      .get(`http://localhost:5000/api/v1/shoppinglists/${listId}`)
+    instance
+      .get(`/shoppinglists/${listId}`)
       .then(response => {
         this.setState({
           name: response.data.shoppinglist[0].name
@@ -39,11 +38,8 @@ class EditShoppingList extends Component {
   onSubmit = e => {
     let listId = this.props.match.params.id;
     e.preventDefault();
-    axios.defaults.headers.common[
-      "Authorization"
-    ] = window.localStorage.getItem("token");
-    axios
-      .put(`http://localhost:5000/api/v1/shoppinglists/${listId}`, {
+    instance
+      .put(`/shoppinglists/${listId}`, {
         name: this.state.name
       })
       .then(response => {
@@ -53,7 +49,7 @@ class EditShoppingList extends Component {
       .catch(err => {
         toast.error(err.response.data.message);
         if (
-          err.response.data.message ==
+          err.response.data.message ===
             "Invalid token. Please register or login" ||
           "Expired token. Please login to get a new token" ||
           "Token blacklisted. Please log in again." ||
@@ -65,27 +61,34 @@ class EditShoppingList extends Component {
   };
 
   render() {
+    const { name, authenticated } = this.state;
+    if (!authenticated) {
+      return <Redirect to="/" />;
+    }
     return (
       <div>
-        <br />
-        <Link className="btn grey" to="/shoppinglists">
-          Back
-        </Link>
-        <h1>Edit shoppinglist</h1>
-        <form onSubmit={e => this.onSubmit(e)}>
-          <div className="input-field">
-            <input
-              type="text"
-              id="name"
-              name="name"
-              ref="name"
-              onChange={e => this.onChange(e)}
-              value={this.state.name}
-            />
-            <label htmlFor="name" />
-          </div>
-          <input type="submit" value="Save" className="btn" />
-        </form>
+        <Navbar />
+        <div className="container">
+          <br />
+          <Link className="btn grey" to="/shoppinglists">
+            Back
+          </Link>
+          <h1>Edit shoppinglist</h1>
+          <form onSubmit={e => this.onSubmit(e)}>
+            <div className="input-field">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                ref="name"
+                onChange={e => this.onChange(e)}
+                value={name}
+              />
+              <label htmlFor="name" />
+            </div>
+            <input type="submit" value="Save" className="btn" />
+          </form>
+        </div>
       </div>
     );
   }

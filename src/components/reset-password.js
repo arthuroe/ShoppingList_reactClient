@@ -1,53 +1,51 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import instance from "../config";
 
-class Register extends React.Component {
+class ResetPassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      registered: false,
-      username: "",
       email: "",
-      password: ""
+      reset: false
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
   onChange = e => {
-    //updates state with user input
+    //update state with user input
     this.setState({
       [e.target.name]: e.target.value
     });
   };
 
   onSubmit = e => {
-    //Sends user input to the API
+    //submit user input to the API
     e.preventDefault();
 
     instance
-      .post("/auth/register", {
-        name: this.state.username,
-        email: this.state.email,
-        password: this.state.password
+      .post("/auth/reset-password", {
+        email: this.state.email
       })
       .then(response => {
-        this.setState({ registered: true });
-        //Redirects to login page after successful registration
-        this.props.history.push("/");
-        //Notifies user of successful registration
+        this.setState({ reset: true });
+        //Notifies user on success
         toast.success(response.data.message);
       })
       .catch(err => {
-        //Notifies user incase of any issues arising from registration
+        //Notifies user incase of an error
         toast.error(err.response.data.message);
       });
   };
 
   render() {
-    const { username, email, password } = this.state;
+    const { reset, email } = this.state;
+    //Redirect user to login after Successfully reseting password
+    if (reset) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="container">
         <main>
@@ -55,7 +53,7 @@ class Register extends React.Component {
             <ToastContainer
               position="top-right"
               autoClose={5000}
-              hideProgressBar={true}
+              hideProgressBar={false}
               newestOnTop={false}
               closeOnClick
               pauseOnHover
@@ -63,19 +61,9 @@ class Register extends React.Component {
             <div className="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">
               <form className="form-signin" onSubmit={e => this.onSubmit(e)}>
                 <div className="card-content">
-                  <span className="card-title">Register Here</span>
+                  <span className="card-title">Reset Password</span>
+                  <p>New password will be sent to your email address.</p>
                   <div className="row">
-                    <div className="input-field col s12">
-                      <input
-                        type="text"
-                        className="validate"
-                        id="username"
-                        name="username"
-                        placeholder="Name"
-                        onChange={e => this.onChange(e)}
-                        value={username}
-                      />
-                    </div>
                     <div className="input-field col s12">
                       <input
                         type="email"
@@ -87,26 +75,13 @@ class Register extends React.Component {
                         value={email}
                       />
                     </div>
-                    <div className="input-field col s12">
-                      <input
-                        type="password"
-                        className="validate"
-                        id="password"
-                        name="password"
-                        placeholder="Enter password"
-                        onChange={e => this.onChange(e)}
-                        value={password}
-                      />
-                    </div>
                   </div>
                   <div className="card-action center-align">
                     <button
                       type="submit"
-                      id="submit"
-                      name="submit"
                       className="btn green waves-effect waves-light"
                     >
-                      Submit
+                      Reset
                     </button>
                   </div>
                   <p className="center-align">
@@ -122,4 +97,4 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+export default ResetPassword;
