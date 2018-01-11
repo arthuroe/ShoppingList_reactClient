@@ -12,13 +12,17 @@ For a live demo visit the link https://shoppinglist-reactclient.herokuapp.com/.
 
 ## Installation
 $ git clone https://github.com/arthuroe/ShoppingList_reactClient
+
 $ cd ShoppingList_reactClient
+
 $ npm install
 
 ## Test
 To test the application
+
 npm test
 
 ## Run
 To run the application
+
 npm start
