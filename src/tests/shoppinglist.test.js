@@ -29,7 +29,7 @@ it("renders without crashing", () => {
 
 mockAxios
   .onDelete("http://localhost:5000/api/v1/shoppinglists/1")
-  .reply(200, { data: { message: "list deleted" } });
+  .reply(200, { message: "list deleted" });
 
 it("deletes on click delete", () => {
   const props = {
